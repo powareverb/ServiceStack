@@ -65,6 +65,8 @@
     <Delete Files="@(NugetPackageFilesToDelete)" />
 
     <ItemGroup>
+      <ServiceStackFiles Include="$(SrcDir)/ServiceStack.ServiceInterface/bin/$(Configuration)/ServiceStack.ServiceInterface.*"></ServiceStackFiles>
+
       <ServiceStackFiles Include="$(SrcDir)/ServiceStack/bin/$(Configuration)/ServiceStack.dll"></ServiceStackFiles>
       <ServiceStackFiles Include="$(SrcDir)/ServiceStack/bin/$(Configuration)/ServiceStack.pdb"></ServiceStackFiles>
       <ServiceStackFiles Include="$(SrcDir)/ServiceStack/bin/$(Configuration)/ServiceStack.xml"></ServiceStackFiles>
@@ -115,6 +117,10 @@
             LogStandardErrorAsError="true" />
 
     <!-- ServiceStack -->
+
+    <MSBuild Projects="$(BuildSolutionDir)/src/ServiceStack.ServiceInterface/ServiceStack.ServiceInterface.Signed.csproj"
+             Targets="Build"
+             Properties="Version=$(PackageVersion);Configuration=$(Configuration)" />
 
     <MSBuild Projects="../src/ServiceStack/ServiceStack.Signed.csproj" Properties="Configuration=$(Configuration)"/>
     <Copy SourceFiles="%(ServiceStackFiles.Identity)" DestinationFolder="$(BuildSolutionDir)/lib/signed" />
